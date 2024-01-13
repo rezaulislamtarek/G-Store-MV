@@ -42,7 +42,7 @@ struct AddProductScreen: View {
                 }
                 presentationMode.wrappedValue.dismiss()
             }
-        }
+        }.navigationTitle("Add Product")
     }
 }
 
