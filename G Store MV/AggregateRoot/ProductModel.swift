@@ -11,6 +11,7 @@ import Foundation
 class ProductModel : ObservableObject{
     
     @Published var products: [Product] = []
+    @Published var product : Product = Product(title: "Product Name", image: imgUrl)
     let apiService : APIService
     
     init(apiService: APIService) {
@@ -18,15 +19,14 @@ class ProductModel : ObservableObject{
     }
     
     func getAllProducts() async throws{
-        products = try await apiService.getJSON(endPoint: "products")
-        //print(products)
+        products = try await apiService.getJSON(endPoint: Endpoints.allProducts)
     }
     
     func addNewProduct(_ product: Product) async throws{
-        var _ : Product = try await apiService.postJSON(endPoint: "products", requestBody: product)
+        var _ : Product = try await apiService.postJSON(endPoint: Endpoints.allProducts, requestBody: product)
         products.append(product)
     }
     func updateProduct(_ product: Product) async throws{
-        var _ : Product = try await apiService.putJSON(endPoint: "products/\(product.id)", requestBody: product)
+        var _ : Product = try await apiService.putJSON(endPoint: Endpoints.updateProduct(product.id!), requestBody: product)
     }
 }

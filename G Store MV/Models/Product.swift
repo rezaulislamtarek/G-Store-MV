@@ -8,10 +8,10 @@
 import Foundation
 
 struct Product : Codable, Identifiable{
-    let id : Int?
-    let title : String?
-    let price : Double?
-    let description : String?
-    let category : String?
-    let image: String?
+    var id : Int? = 0
+    var title : String? = ""
+    var price : Double? = 0.0
+    var description : String? = ""
+    var category : String? = ""
+    var image: String? = ""
 }

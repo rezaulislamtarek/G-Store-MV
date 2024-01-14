@@ -13,8 +13,11 @@ import UIKit
 struct APIService {
      
     
-    let urlString: String = "https://fakestoreapi.com/"
-    //let urlString: String = "https://corestg.ratehammer.com/api/"
+    let baseUrl: URL
+    
+    init(baseUrl: URL? = URL(string: "https://fakestoreapi.com")) {
+        self.baseUrl = baseUrl!
+    }
     
     
     private func getHeaders() -> [String: String] {
@@ -28,10 +31,10 @@ struct APIService {
     
     func getJSON<T: Decodable>(dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .deferredToDate,
                                keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys,
-                               endPoint: String
+                               endPoint: Endpoints
     ) async throws -> T {
         guard
-            let url = URL(string: urlString+endPoint)
+            let url = URL(string: endPoint.path, relativeTo: baseUrl)
         else {
             throw APIError.invalidURL
         }
@@ -66,10 +69,10 @@ struct APIService {
     
     func postJSON<T: Decodable, U: Encodable>(dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .deferredToDate,
                                               keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys,
-                                              endPoint: String,
+                                              endPoint: Endpoints,
                                               requestBody: U
     ) async throws -> T {
-        guard let url = URL(string: urlString + endPoint) else {
+        guard let url = URL(string: endPoint.path, relativeTo: baseUrl) else {
             throw APIError.invalidURL
         }
         
@@ -126,10 +129,10 @@ struct APIService {
     
     func putJSON<T: Decodable, U: Encodable>(dateDecodingStrategy: JSONDecoder.DateDecodingStrategy = .deferredToDate,
                                               keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys,
-                                              endPoint: String,
+                                              endPoint: Endpoints,
                                               requestBody: U
     ) async throws -> T {
-        guard let url = URL(string: urlString + endPoint) else {
+        guard let url = URL(string: endPoint.path, relativeTo: baseUrl) else {
             throw APIError.invalidURL
         }
         
@@ -186,7 +189,7 @@ struct APIService {
     
     func uploadMultipartFormData<T: Codable>(endPoint: String, object: T, image: UIImage, keyForImage: String) async throws ->T {
         
-        guard let url = URL(string: urlString + endPoint) else {
+        guard let url = URL(string: endPoint, relativeTo: baseUrl) else {
             throw APIError.invalidURL
         }
             let mirror = Mirror(reflecting: object)
@@ -274,7 +277,7 @@ struct APIService {
                                               endPoint: String,
                                               requestBody: U
     ) async throws -> T {
-        guard let url = URL(string: urlString + endPoint) else {
+        guard let url = URL(string: endPoint, relativeTo: baseUrl) else {
             throw APIError.invalidURL
         }
         
