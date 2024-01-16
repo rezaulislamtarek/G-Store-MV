@@ -10,6 +10,7 @@ import Foundation
 enum Endpoints{
     case allProducts
     case updateProduct(Int)
+    case categories
     
     var path: String{
         switch self{
@@ -17,7 +18,10 @@ enum Endpoints{
             return "products/"
         case .updateProduct(let id):
             return "products/\(id)"
+        case .categories:
+            return "/products/categories"
         }
+
 
     }
 }

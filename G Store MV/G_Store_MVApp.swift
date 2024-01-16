@@ -9,18 +9,21 @@ import SwiftUI
 
 @main
 struct G_Store_MVApp: App {
-    @StateObject private var model : ProductModel
+    @StateObject private var productModel : ProductModel
+    @StateObject private var categoryModel : CagtegoryModel
     
     init() {
         var conf = Configuration()
         let apiService = APIService(baseUrl: conf.environment.baseUrl)
-       _model = StateObject(wrappedValue: ProductModel(apiService: apiService))
+       _productModel = StateObject(wrappedValue: ProductModel(apiService: apiService))
+        _categoryModel = StateObject(wrappedValue: CagtegoryModel(apiService: apiService))
     }
     
     var body: some Scene {
         WindowGroup {
             SplashScreen()
-                .environmentObject(model)
+                .environmentObject(productModel)
+                .environmentObject(categoryModel)
         }
     }
 }

@@ -12,8 +12,9 @@ struct HomeScreen: View {
     @State var tappedOnProduct : Bool = false
     var body: some View {
         NavigationView {
-            VStack{
+            VStack(spacing: 16 ){
                 toolBarView
+                categoryView
                 ScrollView {
                     VStack(spacing: 16){
                         productHorizontalList
@@ -34,19 +35,32 @@ struct HomeScreen: View {
 
 extension HomeScreen{
     private var toolBarView : some View{
-        HStack{
-           Text("My Store")
-               .font(.title3)
-           Spacer()
-           Button {
-               navigateToAddProduct.toggle()
-           } label: {
-               Image(systemName: "plus")
-           }
+        HStack(spacing: 16){
+            Button {
+                
+            } label: {
+                Image(systemName: "text.alignleft")
+            }
 
+            Spacer()
+            Button {
+                
+            } label: {
+                Image(systemName:"magnifyingglass")
+            }
+            Button {
+                
+            } label: {
+                Image(systemName:"bell.fill")
+            }
        }
+        .foregroundColor(.gray)
        .padding(.all)
-       .background(.gray.opacity(0.1))
+        
+    }
+    private var categoryView  :some View{
+       HorizontalCategories()
+            .padding(.horizontal, 24)
     }
     private var productHorizontalList : some View{
         ProductHorizontalList(tapped: $tappedOnProduct).padding(.horizontal)
@@ -90,5 +104,6 @@ struct HomeScreen_Previews: PreviewProvider {
     static var previews: some View {
         HomeScreen()
             .environmentObject(ProductModel(apiService: APIService( )))
+            .environmentObject(CagtegoryModel(apiService: APIService( )))
     }
 }
