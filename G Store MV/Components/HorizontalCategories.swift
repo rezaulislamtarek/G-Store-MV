@@ -12,16 +12,23 @@ struct HorizontalCategories: View {
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators:false) {
-            HStack(spacing: 16 ){
+            HStack(spacing: 24 ){
                 ForEach(categoriesModel.categories){ cat in
-                    VStack(spacing: 2 ) {
+                    VStack(spacing: 4 ) {
                         Text(cat.name!.localizedCapitalized)
                             .font(.system(size: 14, design: .rounded))
+                        
                         if cat.isActive == true {
                             RoundedRectangle(cornerRadius: 16)
                                 .frame(height: 2)
                                 .foregroundColor(.orange)
                         }
+                    }
+                    .onTapGesture {
+                        let deSelected = categoriesModel.categories.firstIndex{ $0.isActive == true }
+                        let selected =  categoriesModel.categories.firstIndex { $0.id == cat.id }
+                        categoriesModel.categories[deSelected!].isActive?.toggle()
+                        categoriesModel.categories[selected!].isActive?.toggle()
                     }
                         
                 }
@@ -32,6 +39,10 @@ struct HorizontalCategories: View {
                 try? await categoriesModel.fetchAllCategory()
             }
         }
+    }
+    
+    func makeFunc(a: Int) -> Bool{
+        return true
     }
 }
 

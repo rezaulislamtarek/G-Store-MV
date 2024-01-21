@@ -55,12 +55,16 @@ extension HomeScreen{
             }
        }
         .foregroundColor(.gray)
-       .padding(.all)
+       .padding(.horizontal, 24)
         
     }
     private var categoryView  :some View{
-       HorizontalCategories()
-            .padding(.horizontal, 24)
+        VStack(alignment: .leading, spacing: 4) {
+            Text("Categories")
+                .bold()
+            HorizontalCategories()
+        }
+        .padding(.horizontal, 24)
     }
     private var productHorizontalList : some View{
         ProductHorizontalList(tapped: $tappedOnProduct).padding(.horizontal)
